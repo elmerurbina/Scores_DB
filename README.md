@@ -20,7 +20,7 @@ This repository contains a database of my university class scores. Please note t
 
 - If you have any questions or concerns about this repository or the data contained within it, please feel free to contact me.
 
-- **Email**: [Your Email Address]
+- **Email**: [elmerurbina570@gmail.com]
 
 - **University Profile**: You can learn more about my academic background and activities on my [LinkedIn profile](https://www.linkedin.com/in/elmer-urbina-meneses-290a3b208?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app).
 
