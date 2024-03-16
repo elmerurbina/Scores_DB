@@ -21,7 +21,10 @@ conn.execute(my_scores.insert(),  [
     {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Filosofia', 'Score': 94.00},
     {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Programacion I', 'Score': 97.00},
     {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'English II', 'Score': 100.00},
-    {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Contabilidad de costos', 'Score': 85.00}
+    {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Contabilidad de costos', 'Score': 85.00},
+    {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Algebra Lineal', 'Score': 87.00},
+    {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Matematica II', 'Score': 66.00},
+    {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Sociologia', 'Score': 98}
 ])
 
 result = conn.execute(ins)
