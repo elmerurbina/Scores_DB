@@ -36,4 +36,3 @@ with engine.connect() as conn:
 # Retrieve scores from the database
 with engine.connect() as conn:
     scores = conn.execute(my_scores.select()).fetchall()
-
