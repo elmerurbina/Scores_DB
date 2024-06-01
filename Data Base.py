@@ -17,22 +17,35 @@ meta.create_all(engine, checkfirst=True)
 
 # Insert data into the table
 with engine.connect() as conn:
-    conn.execute(my_scores.delete())
-    conn.execute(my_scores.insert(), [
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Matematica I', 'Score': 89.00},
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'English I', 'Score': 92.00},
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Redaccion Tecnica', 'Score': 95.00},
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Introduccion a la Programacion', 'Score': 93.00},
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Contabilidad Financiera', 'Score': 95.00},
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Filosofia', 'Score': 94.00},
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Programacion I', 'Score': 97.00},
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'English II', 'Score': 100.00},
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Contabilidad de costos', 'Score': 85.00},
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Algebra Lineal', 'Score': 87.00},
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Matematica II', 'Score': 64.00},
-        {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Sociologia', 'Score': 98}
-    ])
+    # Begin a transaction
+    trans = conn.begin()
+    try:
+        conn.execute(my_scores.delete())
+        conn.execute(my_scores.insert(), [
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Matematica I', 'Score': 89.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'English I', 'Score': 92.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Redaccion Tecnica', 'Score': 95.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Introduccion a la Programacion', 'Score': 93.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Contabilidad Financiera', 'Score': 95.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Filosofia', 'Score': 94.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Programacion I', 'Score': 97.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'English II', 'Score': 100.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Contabilidad de costos', 'Score': 85.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Algebra Lineal', 'Score': 87.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Matematica II', 'Score': 64.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Sociologia', 'Score': 98.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Ingenieria Economica', 'Score': 84.00},
+            {'name': 'Elmer', 'lastname': 'Urbina Meneses', 'Class': 'Estadistica I', 'Score': 89.00}
+        ])
+        # Commit the transaction
+        trans.commit()
+    except:
+        # Rollback the transaction in case of error
+        trans.rollback()
+        raise
 
 # Retrieve scores from the database
 with engine.connect() as conn:
     scores = conn.execute(my_scores.select()).fetchall()
+    for score in scores:
+        print(score)
