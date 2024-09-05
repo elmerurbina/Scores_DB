@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, Float, func
 from sqlalchemy.orm import sessionmaker
 import tkinter as tk
 from tkinter import ttk, messagebox
@@ -23,6 +23,28 @@ Session = sessionmaker(bind=engine)
 
 # Create a Session
 session = Session()
+
+# Function to update scores summary
+def update_scores_summary():
+    with engine.connect() as conn:
+        # Calculate the total score
+        total_scores = conn.execute(func.sum(my_scores.c.Score)).scalar() or 0
+
+        # Count the number of scores
+        times_scores = conn.execute(func.count(my_scores.c.Score)).scalar() or 0
+
+        # Calculate the average score
+        if times_scores > 0:
+            average_score = total_scores / times_scores
+        else:
+            average_score = 0
+
+        # Display the updated values (replace with UI update if needed)
+        messagebox.showinfo("Scores Summary",
+                            f"Total Scores: {total_scores}\n"
+                            f"Number of Scores: {times_scores}\n"
+                            f"Average Score: {average_score:.2f}")
+
 
 
 # Define the function to insert data into the database
@@ -49,6 +71,7 @@ def insert_data():
             trans.rollback()
             messagebox.showerror("Error", f"Failed to insert data: {e}")
 
+            update_scores_summary()
 
 # Define the function to delete data from the database
 def delete_data():
@@ -73,6 +96,8 @@ def delete_data():
         except Exception as e:
             trans.rollback()
             messagebox.showerror("Error", f"Failed to delete data: {e}")
+
+            update_scores_summary()
 
 
 # Create the Tkinter interface
@@ -112,3 +137,4 @@ delete_button.grid(row=5, column=0, padx=10, pady=10, columnspan=2)
 
 # Run the Tkinter event loop
 root.mainloop()
+
